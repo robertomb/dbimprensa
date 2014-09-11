@@ -4,6 +4,7 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>User ID</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -12,14 +13,18 @@
     <% @journalists.each do |journalist| %>
       <tr>
         <td><%= journalist.name %></td>
+        <td><%= journalist.user.email %></td>
         <td><%= link_to 'Show', journalist %></td>
-        <td><%= link_to 'Edit', edit_journalist_path(journalist) %></td>
-        <td><%= link_to 'Destroy', journalist, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if journalist.user == current_user %>
+          <td><%= link_to 'Edit', edit_journalist_path(journalist) %></td>
+          <td><%= link_to 'Destroy', journalist, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Journalist', new_journalist_path %>
+<% if user_signed_in? %>
+  <%= link_to 'New Journalist', new_journalist_path %>
+<% end %>

@@ -11,13 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140910022252) do
+ActiveRecord::Schema.define(version: 20140910225237) do
 
   create_table "journalists", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
+
+  add_index "journalists", ["user_id"], name: "index_journalists_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

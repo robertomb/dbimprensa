@@ -1,5 +1,7 @@
 class JournalistsController < ApplicationController
   before_action :set_journalist, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:index, :show]
+  before_action :correct_user, only: [:edit, :update, :destroy]
 
   def index
     @journalists = Journalist.all
@@ -9,14 +11,14 @@ class JournalistsController < ApplicationController
   end
 
   def new
-    @journalist = Journalist.new
+    @journalist = current_user.journalists.build
   end
 
   def edit
   end
 
   def create
-    @journalist = Journalist.new(journalist_params)
+    @journalist = current_user.journalists.build(journalist_params)
       if @journalist.save
         redirect_to @journalist, notice: 'Journalist was successfully created.'
       else
@@ -40,6 +42,12 @@ class JournalistsController < ApplicationController
   private
     def set_journalist
       @journalist = Journalist.find(params[:id])
+    end
+
+
+    def correct_user
+      @journalist = current_user.journalists.find_by(id: params[:id])
+      redirect_to journalist_path, notice: "Not authorized to edit this journalist" if @journalist.nil?
     end
 
     def journalist_params
