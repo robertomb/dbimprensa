@@ -11,16 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140910225237) do
+ActiveRecord::Schema.define(version: 20140911233602) do
 
   create_table "journalists", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.integer  "vehicle_id"
   end
 
   add_index "journalists", ["user_id"], name: "index_journalists_on_user_id"
+  add_index "journalists", ["vehicle_id"], name: "index_journalists_on_vehicle_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -39,5 +41,14 @@ ActiveRecord::Schema.define(version: 20140910225237) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+
+  create_table "vehicles", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
+  end
+
+  add_index "vehicles", ["user_id"], name: "index_vehicles_on_user_id"
 
 end

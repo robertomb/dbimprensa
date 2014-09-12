@@ -11,14 +11,19 @@ class JournalistsController < ApplicationController
   end
 
   def new
-    @journalist = current_user.journalists.build
+    @journalist = Journalist.new
+    #@journalist = current_user.journalists.build
+
   end
 
   def edit
   end
 
   def create
-    @journalist = current_user.journalists.build(journalist_params)
+    #@journalist = current_user.journalists.build(journalist_params)
+    @journalist = Journalist.new(journalist_params)
+    @journalist.user_id = current_user.id
+    @journalist.vehicle_id = params[:journalist][:vehicle_id]
       if @journalist.save
         redirect_to @journalist, notice: 'Journalist was successfully created.'
       else
