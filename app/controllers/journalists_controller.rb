@@ -23,7 +23,7 @@ class JournalistsController < ApplicationController
     #@journalist = current_user.journalists.build(journalist_params)
     @journalist = Journalist.new(journalist_params)
     @journalist.user_id = current_user.id
-    @journalist.vehicle_id = params[:journalist][:vehicle_id]
+    #@journalist.vehicle_id = params[:journalist][:vehicle_id]
       if @journalist.save
         redirect_to @journalist, notice: 'Journalist was successfully created.'
       else
@@ -56,6 +56,6 @@ class JournalistsController < ApplicationController
     end
 
     def journalist_params
-      params.require(:journalist).permit(:name)
+      params.require(:journalist).permit(:name, :vehicle_id)
     end
 end
