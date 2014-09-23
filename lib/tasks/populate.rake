@@ -5,11 +5,9 @@ namespace :db do
   # Create 5 users
       5.times do |n|
       puts "[DEBUG] creating user #{n+1} of 5"
-      name = Faker::Name.name
       email = email = "user-#{n+1}@example.com"
       password = "password"
-      User.create!( name: name,
-                    email: email,
+      User.create!( email: email,
                     password: password,
                     password_confirmation: password)
     end
